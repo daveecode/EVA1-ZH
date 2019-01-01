@@ -31,6 +31,8 @@ private slots:
 
     void click();
     void model_invalidSet();
+    void model_changePLayer();
+    void model_gameOver();
 };
 
 #endif // GAMEWIDGET_H

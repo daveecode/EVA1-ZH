@@ -10,6 +10,8 @@ GameWidget::GameWidget(QWidget *parent)
     newGame();
 
     connect(model, SIGNAL(invalidSet()), this, SLOT(model_invalidSet()));
+    connect(model, SIGNAL(changePlayer()), this, SLOT(model_changePLayer()));
+    connect(model, SIGNAL(gameOver()), this, SLOT(model_gameOver()));
 }
 
 GameWidget::~GameWidget()
@@ -63,6 +65,7 @@ void GameWidget::click()
 
                 model->setPoint(i,j);
                 drawTable();
+                model->checkStep();
             }
         }
     }
@@ -71,6 +74,16 @@ void GameWidget::click()
 void GameWidget::model_invalidSet()
 {
     QMessageBox::information(this, trUtf8("Érvénytelen lépés!"), trUtf8("Oda nem rakhatsz te unfair bohóc!"));
+}
+
+void GameWidget::model_changePLayer()
+{
+    QMessageBox::information(this, trUtf8("Játékosváltás!"), trUtf8("Az aktuális játékos nem tud rakni, ezért a másik következik"));
+}
+
+void GameWidget::model_gameOver()
+{
+    QMessageBox::information(this, trUtf8("Vége a játéknak!"), trUtf8("Senki sem tud lépni, véget ért a játék!"));
 }
 
 void GameWidget::drawTable()
